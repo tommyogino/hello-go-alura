@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -23,7 +24,7 @@ func main() {
 				iniciarMonitoramento()
 			case 2:
 				fmt.Println("showing logs...")
-				registraLog("site-teste", false)
+				
 			case 3:
 				fmt.Println("exiting program...")
 				os.Exit(0)
@@ -112,11 +113,13 @@ func lerSitesDoArquivo() [] string {
 }
 
 func registraLog(site string, status bool) {
-	arquivo, err := os.OpenFile("logs.txt",os.O_RDWR|os.O_CREATE, 0666)
+	arquivo, err := os.OpenFile("logs.txt",os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 
 	if err != nil {
 		fmt.Println("error:", err)
 
 	}
-	fmt.Println(arquivo, site, status)
+	arquivo.WriteString(site + " - online: " + strconv.FormatBool(status) + "\n")
+
+	arquivo.Close()
 }
