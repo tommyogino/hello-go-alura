@@ -119,7 +119,7 @@ func registraLog(site string, status bool) {
 		fmt.Println("error:", err)
 
 	}
-	arquivo.WriteString(site + " - online: " + strconv.FormatBool(status) + "\n")
+	arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + "-" + site + " - online: " + strconv.FormatBool(status) + "\n")
 
 	arquivo.Close()
 }
